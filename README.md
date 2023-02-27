@@ -43,3 +43,7 @@ All contributions are assumed to be dual-licensed under MIT/Apache-2.
 Distributed under the terms of both the MIT license and the Apache License (Version 2.0).
 
 See [license/APACHE](license/APACHE) and [license/MIT](license/MIT).
+
+## Screeshot
+
+![Sample screenshot](screenshots/screen.png "A sample scree shot")

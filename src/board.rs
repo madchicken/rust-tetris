@@ -3,7 +3,7 @@ use std::time::Duration;
 use rusty_time::Timer;
 
 use crate::block::{randomize_block, Block};
-use crate::frame::{draw_sprite, Drawable, Frame, O, PIXEL_SIZE, X, Y};
+use crate::frame::{draw_sprite, draw_text, Drawable, Frame, O, PIXEL_SIZE, X, Y};
 
 pub const BOARD_NUM_ROWS: usize = 20;
 pub const BOARD_NUM_COLS: usize = 20;
@@ -251,11 +251,17 @@ impl Drawable for Board {
             self.current_block.current_y() + self.top_y,
         );
         // draw the next falling block
+        draw_text(
+            frame,
+            "Next block:",
+            self.top_x + BORDER_SIZE + BOARD_NUM_COLS + 5,
+            self.top_y,
+        );
         draw_sprite(
             frame,
             self.next_block.get_current_frame(),
             self.top_x + BORDER_SIZE + BOARD_NUM_COLS + 5,
-            self.top_y,
+            self.top_y + 2,
         );
     }
 }
