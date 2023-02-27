@@ -25,10 +25,11 @@ pub struct Board {
     top_x: usize,
     top_y: usize,
     current_speed: u64,
+    debug_mode: bool,
 }
 
 impl Board {
-    pub fn new() -> Self {
+    pub fn new(debug_mode: bool) -> Self {
         Self {
             grid: vec![vec![false; BOARD_NUM_COLS]; BOARD_NUM_ROWS],
             current_block: randomize_block(),
@@ -37,6 +38,7 @@ impl Board {
             top_x: 0,
             top_y: 0,
             current_speed: START_SPEED,
+            debug_mode,
         }
     }
 
@@ -214,13 +216,15 @@ impl Drawable for Board {
             frame[i + self.top_x][self.top_y + BOARD_NUM_ROWS] = '🀫';
         }
 
-        // draw memory map
-        for (y, row) in self.grid.iter().enumerate() {
-            for (x, v) in row.iter().enumerate() {
-                if *v == true {
-                    frame[x + self.top_x + BOARD_NUM_ROWS + 10][y + self.top_y] = X;
-                } else {
-                    frame[x + self.top_x + BOARD_NUM_ROWS + 10][y + self.top_y] = O;
+        if self.debug_mode {
+            // draw memory map
+            for (y, row) in self.grid.iter().enumerate() {
+                for (x, v) in row.iter().enumerate() {
+                    if *v == true {
+                        frame[x + self.top_x + BOARD_NUM_ROWS + 10][y + self.top_y] = X;
+                    } else {
+                        frame[x + self.top_x + BOARD_NUM_ROWS + 10][y + self.top_y] = O;
+                    }
                 }
             }
         }
