@@ -21,3 +21,9 @@ pub fn draw_sprite(frame: &mut Frame, sprite: &Vec<Vec<char>>, x: usize, y: usiz
         }
     }
 }
+
+pub fn draw_text(frame: &mut Frame, text: &str, x: usize, y: usize) {
+    for (i, c) in text.chars().enumerate() {
+        frame[x + i][y] = c;
+    }
+}
