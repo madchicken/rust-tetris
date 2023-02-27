@@ -1,7 +1,7 @@
 use rand::rngs::OsRng;
 use rand::RngCore;
 
-use crate::frame::{O, X};
+use crate::frame::{O, PIXEL_SIZE, X, Y};
 
 #[derive(Clone)]
 pub struct Block {
@@ -37,11 +37,11 @@ impl Block {
     }
 
     pub fn move_right(&mut self) {
-        self.x += 1;
+        self.x += PIXEL_SIZE;
     }
 
     pub fn move_left(&mut self) {
-        self.x -= 1;
+        self.x -= PIXEL_SIZE;
     }
 
     #[allow(dead_code)]
@@ -93,46 +93,46 @@ pub enum BlockType {
 pub fn build_block(block_type: BlockType) -> Block {
     match block_type {
         BlockType::Line => Block::new(vec![
-            vec![vec![X, X, X, X]],
-            vec![vec![X], vec![X], vec![X], vec![X]],
-            vec![vec![X, X, X, X]],
-            vec![vec![X], vec![X], vec![X], vec![X]],
+            vec![vec![X, Y, X, Y, X, Y, X, Y]],
+            vec![vec![X, Y], vec![X, Y], vec![X, Y], vec![X, Y]],
+            vec![vec![X, Y, X, Y, X, Y, X, Y]],
+            vec![vec![X, Y], vec![X, Y], vec![X, Y], vec![X, Y]],
         ]),
         BlockType::Square => Block::new(vec![
-            vec![vec![X, X], vec![X, X]],
-            vec![vec![X, X], vec![X, X]],
-            vec![vec![X, X], vec![X, X]],
-            vec![vec![X, X], vec![X, X]],
+            vec![vec![X, Y, X, Y], vec![X, Y, X, Y]],
+            vec![vec![X, Y, X, Y], vec![X, Y, X, Y]],
+            vec![vec![X, Y, X, Y], vec![X, Y, X, Y]],
+            vec![vec![X, Y, X, Y], vec![X, Y, X, Y]],
         ]),
         BlockType::LeftS => Block::new(vec![
-            vec![vec![X, X, O], vec![O, X, X]],
-            vec![vec![O, X], vec![X, X], vec![X, O]],
-            vec![vec![X, X, O], vec![O, X, X]],
-            vec![vec![O, X], vec![X, X], vec![X, O]],
+            vec![vec![X, Y, X, Y, O, O], vec![O, O, X, Y, X, Y]],
+            vec![vec![O, O, X, Y], vec![X, Y, X, Y], vec![X, Y, O, O]],
+            vec![vec![X, Y, X, Y, O, O], vec![O, O, X, Y, X, Y]],
+            vec![vec![O, O, X, Y], vec![X, Y, X, Y], vec![X, Y, O, O]],
         ]),
         BlockType::RightS => Block::new(vec![
-            vec![vec![O, X, X], vec![X, X, O]],
-            vec![vec![X, O], vec![X, X], vec![O, X]],
-            vec![vec![O, X, X], vec![X, X, O]],
-            vec![vec![X, O], vec![X, X], vec![O, X]],
+            vec![vec![O, O, X, Y, X, Y], vec![X, Y, X, Y, O, O]],
+            vec![vec![X, Y, O, O], vec![X, Y, X, Y], vec![O, O, X, Y]],
+            vec![vec![O, O, X, Y, X, Y], vec![X, Y, X, Y, O, O]],
+            vec![vec![X, Y, O, O], vec![X, Y, X, Y], vec![O, O, X, Y]],
         ]),
         BlockType::LeftL => Block::new(vec![
-            vec![vec![X, O, O], vec![X, X, X]],
-            vec![vec![X, X], vec![X, O], vec![X, O]],
-            vec![vec![X, X, X], vec![O, O, X]],
-            vec![vec![O, X], vec![O, X], vec![X, X]],
+            vec![vec![X, Y, O, O, O, O], vec![X, Y, X, Y, X, Y]],
+            vec![vec![X, Y, X, Y], vec![X, Y, O, O], vec![X, Y, O, O]],
+            vec![vec![X, Y, X, Y, X, Y], vec![O, O, O, O, X, Y]],
+            vec![vec![O, O, X, Y], vec![O, O, X, Y], vec![X, Y, X, Y]],
         ]),
         BlockType::RightL => Block::new(vec![
-            vec![vec![O, O, X], vec![X, X, X]],
-            vec![vec![X, O], vec![X, O], vec![X, X]],
-            vec![vec![X, X, X], vec![X, O, O]],
-            vec![vec![X, X], vec![O, X], vec![O, X]],
+            vec![vec![O, O, O, O, X, Y], vec![X, Y, X, Y, X, Y]],
+            vec![vec![X, Y, O, O], vec![X, Y, O, O], vec![X, Y, X, Y]],
+            vec![vec![X, Y, X, Y, X, Y], vec![X, Y, O, O, O, O]],
+            vec![vec![X, Y, X, Y], vec![O, O, X, Y], vec![O, O, X, Y]],
         ]),
         BlockType::T => Block::new(vec![
-            vec![vec![O, X, O], vec![X, X, X]],
-            vec![vec![X, O], vec![X, X], vec![X, O]],
-            vec![vec![X, X, X], vec![O, X, O]],
-            vec![vec![O, X], vec![X, X], vec![O, X]],
+            vec![vec![O, O, X, Y, O, O], vec![X, Y, X, Y, X, Y]],
+            vec![vec![X, Y, O, O], vec![X, Y, X, Y], vec![X, Y, O, O]],
+            vec![vec![X, Y, X, Y, X, Y], vec![O, O, X, Y, O, O]],
+            vec![vec![O, O, X, Y], vec![X, Y, X, Y], vec![O, O, X, Y]],
         ]),
     }
 }

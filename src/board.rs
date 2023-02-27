@@ -3,10 +3,10 @@ use std::time::Duration;
 use rusty_time::Timer;
 
 use crate::block::{randomize_block, Block};
-use crate::frame::{draw_sprite, Drawable, Frame, O, X};
+use crate::frame::{draw_sprite, Drawable, Frame, O, PIXEL_SIZE, X, Y};
 
 pub const BOARD_NUM_ROWS: usize = 20;
-pub const BOARD_NUM_COLS: usize = 10;
+pub const BOARD_NUM_COLS: usize = 20;
 const BORDER_SIZE: usize = 1;
 const START_SPEED: u64 = 500;
 const SPEED_DELTA: u64 = 50;
@@ -76,7 +76,9 @@ impl Board {
         for (sy, row) in sprite.iter().enumerate() {
             for (sx, pixel) in row.iter().enumerate() {
                 if pixel.eq(&X) {
-                    self.grid[y + sy][x + sx] = true;
+                    for i in 0..PIXEL_SIZE {
+                        self.grid[y + sy][x + sx + i] = true;
+                    }
                 }
             }
         }
@@ -233,7 +235,8 @@ impl Drawable for Board {
         for (y, row) in self.grid.iter().enumerate() {
             for (x, v) in row.iter().enumerate() {
                 if *v == true {
-                    frame[x + self.top_x + BORDER_SIZE][y + self.top_y] = X;
+                    frame[x + self.top_x + BORDER_SIZE][y + self.top_y] =
+                        if x % 2 == 0 { X } else { Y };
                 } else {
                     frame[x + self.top_x + BORDER_SIZE][y + self.top_y] = O;
                 }

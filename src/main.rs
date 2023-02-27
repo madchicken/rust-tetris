@@ -19,12 +19,12 @@ mod frame;
 mod render;
 mod score_board;
 
-pub const SCREEN_NUM_ROWS: usize = 21;
-pub const SCREEN_NUM_COLS: usize = 30;
+pub const SCREEN_NUM_ROWS: usize = 42;
+pub const SCREEN_NUM_COLS: usize = 60;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut audio = Audio::new();
-    for item in &["lose", "line", "rotate", "drop"] {
+    for item in &["lose", "line", "rotate", "drop", "level_up"] {
         audio.add(item, &format!("audio/{}.wav", item));
     }
 
@@ -89,6 +89,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             audio.play("line");
         }
         if score_board.update(lines) {
+            audio.play("level_up");
             board.increase_speed();
         }
         board.draw(&mut curr_frame);

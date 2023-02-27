@@ -1,7 +1,9 @@
 use crate::{SCREEN_NUM_COLS, SCREEN_NUM_ROWS};
 
-pub const X: char = '⎕';
+pub const X: char = '[';
+pub const Y: char = ']';
 pub const O: char = ' ';
+pub const PIXEL_SIZE: usize = 2;
 pub type Frame = [[char; SCREEN_NUM_ROWS]; SCREEN_NUM_COLS];
 
 pub fn new_frame() -> Frame {
@@ -15,7 +17,7 @@ pub trait Drawable {
 pub fn draw_sprite(frame: &mut Frame, sprite: &Vec<Vec<char>>, x: usize, y: usize) {
     for (sy, row) in sprite.iter().enumerate() {
         for (sx, c) in row.iter().enumerate() {
-            if frame[sx + x][sy + y].ne(&X) {
+            if frame[sx + x][sy + y].ne(&X) && frame[sx + x][sy + y].ne(&Y) {
                 frame[sx + x][sy + y] = *c;
             }
         }
