@@ -32,7 +32,7 @@ impl ScoreBoard {
             }
         }
         if lines > 0 {
-            if self.total_lines % 2 == 0 {
+            if self.total_lines % 10 == 0 {
                 self.inc_level();
                 return true;
             }
