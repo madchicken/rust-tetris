@@ -34,7 +34,7 @@ impl Board {
             grid: vec![vec![false; BOARD_NUM_COLS]; BOARD_NUM_ROWS],
             current_block: randomize_block(),
             next_block: randomize_block(),
-            move_timer: Timer::from_millis(START_SPEED),
+            move_timer: Timer::new(Duration::from_millis(START_SPEED)),
             top_x: 0,
             top_y: 0,
             current_speed: START_SPEED,
@@ -43,20 +43,20 @@ impl Board {
     }
 
     pub fn speed_up(&mut self) {
-        self.move_timer = Timer::from_millis(0);
+        self.move_timer = Timer::new(Duration::from_millis(0));
     }
 
     pub fn increase_speed(&mut self) {
         if self.current_speed > 200 {
             self.current_speed -= SPEED_DELTA;
-            self.move_timer = Timer::from_millis(self.current_speed);
+            self.move_timer = Timer::new(Duration::from_millis(self.current_speed));
         }
     }
 
     pub fn update(&mut self, delta: Duration) -> bool {
-        self.move_timer.update(delta);
-        if self.move_timer.ready {
-            self.move_timer = Timer::from_millis(self.current_speed);
+        self.move_timer.tick(delta);
+        if self.move_timer.finished() {
+            self.move_timer = Timer::new(Duration::from_millis(self.current_speed));
             if !self.move_block_down() {
                 self.freeze_block();
                 self.current_block = self.next_block.clone();
